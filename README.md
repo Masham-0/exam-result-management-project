@@ -3,6 +3,8 @@
 A modern, clean, role-based academic result management system built using Next.js, TypeScript, TailwindCSS, shadcn/ui, and Prisma.
 This platform provides separate dashboards for Students, Teachers, and Admins, each with highly specific functionality.
 
+https://examresult.vercel.app/
+
 🚀 Key Features
 🔵 Student
 
@@ -56,8 +58,7 @@ Deployment: Vercel (auto-build, auto-routing, edge support)
 ▶️ Running Locally
 
 Clone the repository
-git clone https://github.com/username/repo-name.git
-
+git clone https://github.com/Masham-0/exam-result-management-project
 Install dependencies
 npm install
 
