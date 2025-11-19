@@ -1,213 +1,254 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { ThemeToggle } from "@/components/theme-toggle"
-import { motion } from "framer-motion"
-import { ArrowLeft, Shield, Users, BookOpen, Search, Filter } from "lucide-react"
-import { toast } from "sonner"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { motion } from "framer-motion";
+import {
+  ArrowLeft,
+  Shield,
+  Users,
+  BookOpen,
+  Search,
+  Filter,
+} from "lucide-react";
+import { toast } from "sonner";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface AdminData {
-  adminID: string
-  username: string
+  adminID: string;
+  username: string;
   students: Array<{
-    rollNo: string
-    firstName: string
-    lastName: string
-    dateOfBirth: string
+    rollNo: string;
+    firstName: string;
+    lastName: string;
+    dateOfBirth: string;
     branch: {
-      branchCode: string
-      branchName: string
-    }
+      branchCode: string;
+      branchName: string;
+    };
     results: Array<{
       offering: {
-        offeringID: string
+        offeringID: string;
         subject: {
-          subjectCode: string
-          subjectName: string
-        }
+          subjectCode: string;
+          subjectName: string;
+        };
         branch: {
-          branchCode: string
-          branchName: string
-        }
-        semester: string
-        credits: string
-      }
-      theoryMarks: string
-      internalMarks: string
-      totalMarks: string
-      gradePoint: string
-      status: string
-    }>
-  }>
+          branchCode: string;
+          branchName: string;
+        };
+        semester: string;
+        credits: string;
+      };
+      theoryMarks: string;
+      internalMarks: string;
+      totalMarks: string;
+      gradePoint: string;
+      status: string;
+    }>;
+  }>;
   teachers: Array<{
-    teacherID: string
-    teacherName: string
+    teacherID: string;
+    teacherName: string;
     subjectOfferings: Array<{
-      offeringID: string
+      offeringID: string;
       subject: {
-        subjectCode: string
-        subjectName: string
-      }
+        subjectCode: string;
+        subjectName: string;
+      };
       branch: {
-        branchCode: string
-        branchName: string
-      }
-      semester: string
-      credits: string
-    }>
-  }>
+        branchCode: string;
+        branchName: string;
+      };
+      semester: string;
+      credits: string;
+    }>;
+  }>;
   branches: Array<{
-    branchCode: string
-    branchName: string
-    students: Array<any>
-    subjectOfferings: Array<any>
-  }>
+    branchCode: string;
+    branchName: string;
+    students: Array<any>;
+    subjectOfferings: Array<any>;
+  }>;
   subjects: Array<{
-    subjectCode: string
-    subjectName: string
+    subjectCode: string;
+    subjectName: string;
     subjectOfferings: Array<{
       branch: {
-        branchCode: string
-        branchName: string
-      }
+        branchCode: string;
+        branchName: string;
+      };
       teacher: {
-        teacherID: string
-        teacherName: string
-      }
-    }>
-  }>
+        teacherID: string;
+        teacherName: string;
+      };
+    }>;
+  }>;
   subjectOfferings: Array<{
-    offeringID: string
+    offeringID: string;
     subject: {
-      subjectCode: string
-      subjectName: string
-    }
+      subjectCode: string;
+      subjectName: string;
+    };
     branch: {
-      branchCode: string
-      branchName: string
-    }
-    semester: string
-    credits: string
+      branchCode: string;
+      branchName: string;
+    };
+    semester: string;
+    credits: string;
     teacher: {
-      teacherID: string
-      teacherName: string
-    }
+      teacherID: string;
+      teacherName: string;
+    };
     results: Array<{
       student: {
-        rollNo: string
-        firstName: string
-        lastName: string
-      }
-    }>
-  }>
+        rollNo: string;
+        firstName: string;
+        lastName: string;
+      };
+    }>;
+  }>;
   results: Array<{
     student: {
-      rollNo: string
-      firstName: string
-      lastName: string
+      rollNo: string;
+      firstName: string;
+      lastName: string;
       branch: {
-        branchCode: string
-        branchName: string
-      }
-    }
+        branchCode: string;
+        branchName: string;
+      };
+    };
     offering: {
-      offeringID: string
+      offeringID: string;
       subject: {
-        subjectCode: string
-        subjectName: string
-      }
+        subjectCode: string;
+        subjectName: string;
+      };
       branch: {
-        branchCode: string
-        branchName: string
-      }
-    }
-    theoryMarks: string
-    internalMarks: string
-    totalMarks: string
-    gradePoint: string
-    status: string
-  }>
+        branchCode: string;
+        branchName: string;
+      };
+    };
+    theoryMarks: string;
+    internalMarks: string;
+    totalMarks: string;
+    gradePoint: string;
+    status: string;
+  }>;
 }
 
 export default function AdminDashboard() {
-  const [adminData, setAdminData] = useState<AdminData | null>(null)
-  const [searchTerm, setSearchTerm] = useState("")
-  const [filterBy, setFilterBy] = useState("all")
-  const [isLoading, setIsLoading] = useState(true)
-  const router = useRouter()
+  const [adminData, setAdminData] = useState<AdminData | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterBy, setFilterBy] = useState("all");
+  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
-    const data = localStorage.getItem("adminData")
+    const data = localStorage.getItem("adminData");
     if (!data) {
-      toast.error("Please login first")
-      router.push("/admin/login")
-      return
+      toast.error("Please login first");
+      router.push("/admin/login");
+      return;
     }
 
     try {
-      const parsedData = JSON.parse(data)
-      setAdminData(parsedData)
+      const parsedData = JSON.parse(data);
+      setAdminData(parsedData);
     } catch (error) {
-      toast.error("Invalid session data")
-      router.push("/admin/login")
+      toast.error("Invalid session data");
+      router.push("/admin/login");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }, [router])
+  }, [router]);
 
   const handleLogout = () => {
-    localStorage.removeItem("adminData")
-    toast.success("Logged out successfully")
-    router.push("/")
-  }
+    localStorage.removeItem("adminData");
+    toast.success("Logged out successfully");
+    router.push("/");
+  };
 
   const getFilteredResults = () => {
-    if (!adminData) return []
+    if (!adminData) return [];
 
-    let filtered = adminData.results
+    let filtered = adminData.results || [];
 
-    if (searchTerm) {
-      filtered = filtered.filter(result =>
-        result.student.rollNo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        result.student.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        result.student.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        result.offering.subject.subjectCode.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        result.offering.subject.subjectName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        result.student.branch.branchCode.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+    const term = (searchTerm || "").trim().toLowerCase();
+
+    if (term) {
+      filtered = filtered.filter((result) => {
+        const roll = result?.student?.rollNo ?? "";
+        const first = result?.student?.firstName ?? "";
+        const last = result?.student?.lastName ?? "";
+        const subjCode = result?.offering?.subject?.subjectCode ?? "";
+        const subjName = result?.offering?.subject?.subjectName ?? "";
+        const branchCode = result?.student?.branch?.branchCode ?? "";
+
+        return (
+          roll.toLowerCase().includes(term) ||
+          first.toLowerCase().includes(term) ||
+          last.toLowerCase().includes(term) ||
+          subjCode.toLowerCase().includes(term) ||
+          subjName.toLowerCase().includes(term) ||
+          branchCode.toLowerCase().includes(term)
+        );
+      });
     }
 
     if (filterBy !== "all") {
-      filtered = filtered.filter(result => {
+      filtered = filtered.filter((result) => {
+        const branchCode = result?.student?.branch?.branchCode ?? "";
+        const subjCode = result?.offering?.subject?.subjectCode ?? "";
+        const status = result?.status ?? "";
+
         switch (filterBy) {
           case "branch":
-            return result.student.branch.branchCode.includes(searchTerm.toUpperCase())
+            return branchCode.toLowerCase().includes(term);
           case "subject":
-            return result.offering.subject.subjectCode.toLowerCase().includes(searchTerm.toLowerCase())
+            return subjCode.toLowerCase().includes(term);
           case "status":
-            return result.status.toLowerCase().includes(searchTerm.toLowerCase())
+            return status.toLowerCase().includes(term);
           default:
-            return true
+            return true;
         }
-      })
+      });
     }
 
-    return filtered
-  }
+    return filtered;
+  };
 
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-background to-muted/20 flex items-center justify-center">
         <div className="text-center">Loading...</div>
       </div>
-    )
+    );
   }
 
   if (!adminData) {
@@ -220,10 +261,10 @@ export default function AdminDashboard() {
           </Button>
         </div>
       </div>
-    )
+    );
   }
 
-  const filteredResults = getFilteredResults()
+  const filteredResults = getFilteredResults();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-muted/20">
@@ -240,7 +281,9 @@ export default function AdminDashboard() {
               <div className="flex items-center gap-2">
                 <Shield className="w-5 h-5 text-primary" />
                 <span className="font-semibold">Admin Dashboard</span>
-                <span className="text-muted-foreground">({adminData.adminID})</span>
+                <span className="text-muted-foreground">
+                  ({adminData.adminID})
+                </span>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -263,44 +306,62 @@ export default function AdminDashboard() {
         >
           <Card className="hover:shadow-lg transition-all duration-300">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Students</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Total Students
+              </CardTitle>
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{adminData.students?.length || 0}</div>
-              <p className="text-xs text-muted-foreground">Registered students</p>
+              <div className="text-2xl font-bold">
+                {adminData.students?.length || 0}
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Registered students
+              </p>
             </CardContent>
           </Card>
 
           <Card className="hover:shadow-lg transition-all duration-300">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Teachers</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Total Teachers
+              </CardTitle>
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{adminData.teachers?.length || 0}</div>
+              <div className="text-2xl font-bold">
+                {adminData.teachers?.length || 0}
+              </div>
               <p className="text-xs text-muted-foreground">Active teachers</p>
             </CardContent>
           </Card>
 
           <Card className="hover:shadow-lg transition-all duration-300">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Branches</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Total Branches
+              </CardTitle>
               <BookOpen className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{adminData.branches?.length || 0}</div>
+              <div className="text-2xl font-bold">
+                {adminData.branches?.length || 0}
+              </div>
               <p className="text-xs text-muted-foreground">Academic branches</p>
             </CardContent>
           </Card>
 
           <Card className="hover:shadow-lg transition-all duration-300">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Results</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Total Results
+              </CardTitle>
               <BookOpen className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{adminData.results?.length || 0}</div>
+              <div className="text-2xl font-bold">
+                {adminData.results?.length || 0}
+              </div>
               <p className="text-xs text-muted-foreground">Exam results</p>
             </CardContent>
           </Card>
@@ -325,18 +386,36 @@ export default function AdminDashboard() {
               >
                 <Card className="h-full hover:shadow-lg transition-all duration-300 border-primary/20 hover:border-primary/40">
                   <CardHeader>
-                    <CardTitle className="text-lg">{branch.branchCode}</CardTitle>
+                    <CardTitle className="text-lg">
+                      {branch.branchCode}
+                    </CardTitle>
                     <CardDescription>{branch.branchName}</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Students:</span>
-                        <span className="font-medium">{branch.students?.length || 0}</span>
+                        <span className="font-medium">
+                          {adminData.students?.filter((s) => {
+                            const studentBranchCode =
+                              (s as any)?.branch?.branchCode ??
+                              (s as any)?.branchCode ??
+                              "";
+                            return studentBranchCode === branch.branchCode;
+                          }).length || 0}
+                        </span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Subjects:</span>
-                        <span className="font-medium">{branch.subjectOfferings?.length || 0}</span>
+                        <span className="font-medium">
+                          {adminData.subjectOfferings?.filter((o) => {
+                            const offeringBranchCode =
+                              (o as any)?.branch?.branchCode ??
+                              (o as any)?.branchCode ??
+                              "";
+                            return offeringBranchCode === branch.branchCode;
+                          }).length || 0}
+                        </span>
                       </div>
                     </div>
                   </CardContent>
@@ -408,11 +487,26 @@ export default function AdminDashboard() {
                       transition={{ duration: 0.3, delay: index * 0.05 }}
                       className="hover:bg-muted/50 transition-colors"
                     >
-                      <TableCell className="font-medium">{result.student.rollNo}</TableCell>
-                      <TableCell>{result.student.firstName} {result.student.lastName}</TableCell>
+                      <TableCell className="font-medium">
+                        {result.student.rollNo}
+                      </TableCell>
+                      <TableCell>
+                        {result.student.firstName} {result.student.lastName}
+                      </TableCell>
                       <TableCell>{result.student.branch.branchCode}</TableCell>
-                      <TableCell>{result.offering.subject.subjectCode}</TableCell>
-                      <TableCell className="font-semibold">{result.totalMarks}</TableCell>
+                      <TableCell>
+                        <div className="flex flex-col">
+                          <span className="font-medium">
+                            {result.offering.subject.subjectCode}
+                          </span>
+                          <span className="text-xs text-muted-foreground">
+                            {result.offering.subject.subjectName}
+                          </span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="font-semibold">
+                        {result.totalMarks}
+                      </TableCell>
                       <TableCell>{result.gradePoint}</TableCell>
                       <TableCell>
                         <span
@@ -429,7 +523,7 @@ export default function AdminDashboard() {
                   ))}
                 </TableBody>
               </Table>
-              
+
               {filteredResults.length > 10 && (
                 <div className="text-center mt-4 text-sm text-muted-foreground">
                   Showing 10 of {filteredResults.length} results
@@ -440,5 +534,5 @@ export default function AdminDashboard() {
         </motion.div>
       </main>
     </div>
-  )
+  );
 }

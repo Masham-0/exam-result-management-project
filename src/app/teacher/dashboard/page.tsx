@@ -1,112 +1,131 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { ThemeToggle } from "@/components/theme-toggle"
-import { motion } from "framer-motion"
-import { ArrowLeft, Users, BookOpen, Search } from "lucide-react"
-import { toast } from "sonner"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { motion } from "framer-motion";
+import { ArrowLeft, Users, BookOpen, Search } from "lucide-react";
+import { toast } from "sonner";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface TeacherData {
-  teacherID: string
-  teacherName: string
+  teacherID: string;
+  teacherName: string;
   subjectOfferings: Array<{
-    offeringID: string
+    offeringID: string;
     subject: {
-      subjectCode: string
-      subjectName: string
-    }
+      subjectCode: string;
+      subjectName: string;
+    };
     branch: {
-      branchCode: string
-      branchName: string
-    }
-    semester: string
-    credits: string
+      branchCode: string;
+      branchName: string;
+    };
+    semester: string;
+    credits: string;
     results: Array<{
       student: {
-        rollNo: string
-        firstName: string
-        lastName: string
-        dateOfBirth: string
+        rollNo: string;
+        firstName: string;
+        lastName: string;
+        dateOfBirth: string;
         branch: {
-          branchCode: string
-          branchName: string
-        }
-      }
-      theoryMarks: string
-      internalMarks: string
-      totalMarks: string
-      gradePoint: string
-      status: string
-    }>
-  }>
+          branchCode: string;
+          branchName: string;
+        };
+      };
+      theoryMarks: string;
+      internalMarks: string;
+      totalMarks: string;
+      gradePoint: string;
+      status: string;
+    }>;
+  }>;
 }
 
 export default function TeacherDashboard() {
-  const [teacherData, setTeacherData] = useState<TeacherData | null>(null)
-  const [selectedOffering, setSelectedOffering] = useState<string | null>(null)
-  const [sortBy, setSortBy] = useState<string>("rollNo")
-  const [isLoading, setIsLoading] = useState(true)
-  const router = useRouter()
+  const [teacherData, setTeacherData] = useState<TeacherData | null>(null);
+  const [selectedOffering, setSelectedOffering] = useState<string | null>(null);
+  const [sortBy, setSortBy] = useState<string>("rollNo");
+  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
-    const data = localStorage.getItem("teacherData")
+    const data = localStorage.getItem("teacherData");
     if (!data) {
-      toast.error("Please login first")
-      router.push("/teacher/login")
-      return
+      toast.error("Please login first");
+      router.push("/teacher/login");
+      return;
     }
 
     try {
-      const parsedData = JSON.parse(data)
-      setTeacherData(parsedData)
+      const parsedData = JSON.parse(data);
+      setTeacherData(parsedData);
     } catch (error) {
-      toast.error("Invalid session data")
-      router.push("/teacher/login")
+      toast.error("Invalid session data");
+      router.push("/teacher/login");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }, [router])
+  }, [router]);
 
   const handleLogout = () => {
-    localStorage.removeItem("teacherData")
-    toast.success("Logged out successfully")
-    router.push("/")
-  }
+    localStorage.removeItem("teacherData");
+    toast.success("Logged out successfully");
+    router.push("/");
+  };
 
   const getSortedResults = (results: any[]) => {
     const sorted = [...results].sort((a, b) => {
       switch (sortBy) {
         case "rollNo":
-          const rollA = a.student?.rollNo || ''
-          const rollB = b.student?.rollNo || ''
-          return rollA.localeCompare(rollB)
+          const rollA = a.student?.rollNo || "";
+          const rollB = b.student?.rollNo || "";
+          return rollA.localeCompare(rollB);
         case "totalMarks":
-          const marksA = parseInt(a.totalMarks || '0')
-          const marksB = parseInt(b.totalMarks || '0')
-          return marksB - marksA
+          const marksA = parseInt(a.totalMarks || "0");
+          const marksB = parseInt(b.totalMarks || "0");
+          return marksB - marksA;
         case "dateOfBirth":
-          const dobA = a.student?.dateOfBirth || ''
-          const dobB = b.student?.dateOfBirth || ''
-          return dobA.localeCompare(dobB)
+          const dobA = a.student?.dateOfBirth || "";
+          const dobB = b.student?.dateOfBirth || "";
+          return dobA.localeCompare(dobB);
         default:
-          return 0
+          return 0;
       }
-    })
-    return sorted
-  }
+    });
+    return sorted;
+  };
 
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-background to-muted/20 flex items-center justify-center">
         <div className="text-center">Loading...</div>
       </div>
-    )
+    );
   }
 
   if (!teacherData) {
@@ -119,12 +138,12 @@ export default function TeacherDashboard() {
           </Button>
         </div>
       </div>
-    )
+    );
   }
 
   const selectedOfferingData = teacherData.subjectOfferings.find(
-    offering => offering.offeringID === selectedOffering
-  )
+    (offering) => offering.offeringID === selectedOffering
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-muted/20">
@@ -141,7 +160,9 @@ export default function TeacherDashboard() {
               <div className="flex items-center gap-2">
                 <Users className="w-5 h-5 text-primary" />
                 <span className="font-semibold">{teacherData.teacherName}</span>
-                <span className="text-muted-foreground">({teacherData.teacherID})</span>
+                <span className="text-muted-foreground">
+                  ({teacherData.teacherID})
+                </span>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -174,21 +195,42 @@ export default function TeacherDashboard() {
                 className="cursor-pointer"
                 onClick={() => setSelectedOffering(offering.offeringID)}
               >
-                <Card className={`h-full hover:shadow-lg transition-all duration-300 ${
-                  selectedOffering === offering.offeringID ? 'ring-2 ring-primary' : 'border-primary/20 hover:border-primary/40'
-                }`}>
+                <Card
+                  className={`h-full hover:shadow-lg transition-all duration-300 ${
+                    selectedOffering === offering.offeringID
+                      ? "ring-2 ring-primary"
+                      : "border-primary/20 hover:border-primary/40"
+                  }`}
+                >
                   <CardHeader>
                     <div className="flex items-center gap-2 mb-2">
                       <BookOpen className="w-5 h-5 text-primary" />
-                      <CardTitle className="text-lg">{offering.subject.subjectCode}</CardTitle>
+                      <CardTitle className="text-lg">
+                        {(offering as any)?.subjectCode ??
+                          (offering as any)?.subject?.subjectCode ??
+                          (offering as any)?.subject?.subject_code ??
+                          "N/A"}
+                      </CardTitle>
                     </div>
-                    <CardDescription>{offering.subject.subjectName}</CardDescription>
+                    <CardDescription>
+                      {(offering as any)?.subjectName ??
+                        (offering as any)?.subject?.subjectName ??
+                        (offering as any)?.subject?.subject_name ??
+                        ""}
+                    </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Branch:</span>
-                        <span className="font-medium">{offering.branch.branchCode}</span>
+                        <span className="font-medium">
+                          {(offering as any)?.branchName ??
+                            (offering as any)?.branch?.branchName ??
+                            (offering as any)?.branch?.branch_name ??
+                            (offering as any)?.branch?.branchCode ??
+                            (offering as any)?.branch?.branch_code ??
+                            "N/A"}
+                        </span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Semester:</span>
@@ -200,7 +242,9 @@ export default function TeacherDashboard() {
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Students:</span>
-                        <span className="font-medium">{offering.results.length}</span>
+                        <span className="font-medium">
+                          {offering.results.length}
+                        </span>
                       </div>
                     </div>
                   </CardContent>
@@ -223,7 +267,15 @@ export default function TeacherDashboard() {
                   <div>
                     <CardTitle>Student Results</CardTitle>
                     <CardDescription>
-                      {selectedOfferingData.subject.subjectCode} - {selectedOfferingData.subject.subjectName}
+                      {(selectedOfferingData as any)?.subjectCode ??
+                        (selectedOfferingData as any)?.subject?.subjectCode ??
+                        (selectedOfferingData as any)?.subject?.subject_code ??
+                        "N/A"}{" "}
+                      -{" "}
+                      {(selectedOfferingData as any)?.subjectName ??
+                        (selectedOfferingData as any)?.subject?.subjectName ??
+                        (selectedOfferingData as any)?.subject?.subject_name ??
+                        ""}
                     </CardDescription>
                   </div>
                   <div className="flex items-center gap-2">
@@ -235,7 +287,9 @@ export default function TeacherDashboard() {
                       <SelectContent>
                         <SelectItem value="rollNo">Roll Number</SelectItem>
                         <SelectItem value="totalMarks">Total Marks</SelectItem>
-                        <SelectItem value="dateOfBirth">Date of Birth</SelectItem>
+                        <SelectItem value="dateOfBirth">
+                          Date of Birth
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -256,36 +310,45 @@ export default function TeacherDashboard() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {getSortedResults(selectedOfferingData.results).map((result, index) => (
-                      <motion.tr
-                        key={result.student?.rollNo || index}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.3, delay: index * 0.05 }}
-                        className="hover:bg-muted/50 transition-colors"
-                      >
-                        <TableCell className="font-medium">{result.student?.rollNo || 'N/A'}</TableCell>
-                        <TableCell>
-                          {result.student?.firstName || ''} {result.student?.lastName || ''}
-                        </TableCell>
-                        <TableCell>{result.student?.branch?.branchCode || 'N/A'}</TableCell>
-                        <TableCell>{result.theoryMarks || '0'}</TableCell>
-                        <TableCell>{result.internalMarks || '0'}</TableCell>
-                        <TableCell className="font-semibold">{result.totalMarks || '0'}</TableCell>
-                        <TableCell>{result.gradePoint || '0'}</TableCell>
-                        <TableCell>
-                          <span
-                            className={`px-2 py-1 rounded-full text-xs font-medium ${
-                              result.status === "Pass"
-                                ? "bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100"
-                                : "bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100"
-                            }`}
-                          >
-                            {result.status || 'N/A'}
-                          </span>
-                        </TableCell>
-                      </motion.tr>
-                    ))}
+                    {getSortedResults(selectedOfferingData.results).map(
+                      (result, index) => (
+                        <motion.tr
+                          key={result.student?.rollNo || index}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.3, delay: index * 0.05 }}
+                          className="hover:bg-muted/50 transition-colors"
+                        >
+                          <TableCell className="font-medium">
+                            {result.student?.rollNo || "N/A"}
+                          </TableCell>
+                          <TableCell>
+                            {result.student?.firstName || ""}{" "}
+                            {result.student?.lastName || ""}
+                          </TableCell>
+                          <TableCell>
+                            {result.student?.branch?.branchCode || "N/A"}
+                          </TableCell>
+                          <TableCell>{result.theoryMarks || "0"}</TableCell>
+                          <TableCell>{result.internalMarks || "0"}</TableCell>
+                          <TableCell className="font-semibold">
+                            {result.totalMarks || "0"}
+                          </TableCell>
+                          <TableCell>{result.gradePoint || "0"}</TableCell>
+                          <TableCell>
+                            <span
+                              className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                result.status === "Pass"
+                                  ? "bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100"
+                                  : "bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100"
+                              }`}
+                            >
+                              {result.status || "N/A"}
+                            </span>
+                          </TableCell>
+                        </motion.tr>
+                      )
+                    )}
                   </TableBody>
                 </Table>
               </CardContent>
@@ -294,5 +357,5 @@ export default function TeacherDashboard() {
         )}
       </main>
     </div>
-  )
+  );
 }

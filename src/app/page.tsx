@@ -15,12 +15,12 @@ import { motion } from "framer-motion";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-muted/20">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-background to-muted/20">
       <div className="m-4">
         <ThemeToggle />
       </div>
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="flex-1 container mx-auto px-4 py-8">
         {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -179,7 +179,7 @@ export default function Home() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.6 }}
-        className="border-t bg-muted/30 absolute bottom-0 left-0 right-0"
+        className="border-t bg-muted/30 mt-auto"
       >
         <div className="container mx-auto px-4 py-6 text-center">
           <p className="text-sm text-muted-foreground">
