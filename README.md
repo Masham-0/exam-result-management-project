@@ -92,17 +92,17 @@ Vercel auto-detects Next.js and deploys automatically
 Your app becomes instantly accessible via HTTPS
 
 🧩 Project Structure
-project/
- ├── app/
- ├── components/
- ├── lib/
- ├── prisma/
- ├── public/
- ├── styles/
- ├── next.config.ts
- ├── tailwind.config.ts
- ├── package.json
- └── README.md
+project/<br />
+ ├── app/<br />
+ ├── components/<br />
+ ├── lib/<br />
+ ├── prisma/<br />
+ ├── public/<br />
+ ├── styles/<br />
+ ├── next.config.ts<br />
+ ├── tailwind.config.ts<br />
+ ├── package.json<br />
+ └── README.md<br />
 
 🎯 Future Enhancements
 
@@ -118,8 +118,8 @@ This project is intended for academic and educational use.
 
 ❤️ Acknowledgments
 
-Next.js
-Vercel
-Supabase
-TailwindCSS
-Shadcn UI
+Next.js<br />
+Vercel<br />
+Supabase<br />
+TailwindCSS<br />
+Shadcn UI<br />
