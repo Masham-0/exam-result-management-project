@@ -5,6 +5,9 @@ This platform provides separate dashboards for Students, Teachers, and Admins, e
 
 https://examresult.vercel.app/
 
+About the Project :
+https://docs.google.com/document/d/1rV3lXFI_HmSxuWDrZ4a4SjcP2QV1xc89XR3UJcDVxBE/edit?usp=sharing
+
 🚀 Key Features
 🔵 Student
 
