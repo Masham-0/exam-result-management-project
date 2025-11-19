@@ -8,17 +8,17 @@ https://examresult.vercel.app/
 About the Project :
 https://docs.google.com/document/d/1rV3lXFI_HmSxuWDrZ4a4SjcP2QV1xc89XR3UJcDVxBE/edit?usp=sharing
 
-Test Login Credentials for the Project :
-As a Student : 
-ID - 2024UCM2376
-Password - 20050521
+Test Login Credentials for the Project :<br />
+As a Student : <br />
+ID - 2024UCM2376<br />
+Password - 20050521<br />
 
-As a teacher - T010
-ID - password123
+As a teacher - T010<br />
+ID - password123<br />
 
-As an Admin - 
-ID - ADMIN001
-password - admin123
+As an Admin - <br />
+ID - ADMIN001<br />
+password - admin123<br />
 
 🚀 Key Features
 🔵 Student
