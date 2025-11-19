@@ -20,83 +20,74 @@ As an Admin - <br />
 ID - ADMIN001<br />
 password - admin123<br />
 
-🚀 Key Features
-🔵 Student
+🚀 Key Features<br />
+🔵 Student<br />
 
-Subject-wise result view
-Date-of-birth login (YYYYMMDD)
-Automatic credit-weighted CG calculation
-Pass/Fail status per subject
-Minimal, distraction-free dashboard
+Subject-wise result view<br />
+Date-of-birth login (YYYYMMDD)<br />
+Automatic credit-weighted CG calculation<br />
+Pass/Fail status per subject<br />
+Minimal, distraction-free dashboard<br />
 
-🟢 Teacher
+🟢 Teacher<br />
 
-TeacherID-based login
-View results of assigned subject offerings
-Sortable result tables (by marks, age, roll number)
-Clean interface customized for academic staff
+TeacherID-based login<br />
+View results of assigned subject offerings<br />
+Sortable result tables (by marks, age, roll number)<br />
+Clean interface customized for academic staff<br />
 
-🔴 Admin
+🔴 Admin<br />
 
-Complete access to all results and student data
-Search by name, roll number, subject, or branch
-Branch overview dashboard
-Absolute control over academic records
+Complete access to all results and student data<br />
+Search by name, roll number, subject, or branch<br />
+Branch overview dashboard<br />
+Absolute control over academic records<br />
 
-🧱 Tech Stack
+🧱 Tech Stack<br />
 
-Next.js (App Router)
-TypeScript
-TailwindCSS + shadcn/ui
-Prisma ORM
-SQL Database
-Framer Motion Animations
-Vercel for hosting
+Next.js (App Router)<br />
+TypeScript<br />
+TailwindCSS + shadcn/ui<br />
+Prisma ORM<br />
+SQL Database<br />
+Vercel for hosting<br />
 
-🗃 Database Schema (Core Models)
-Table	Fields
-STUDENT	rollNo (PK), firstName, lastName, dateOfBirth, branchCode (FK)
-BRANCH	branchCode (PK), branchName
-SUBJECT	subjectCode (PK), subjectName
-SUBJECTOFFERING	offeringID (PK), subjectCode (FK), branchCode (FK), semester, credits, assignedTeacherID (FK)
-TEACHER	teacherID (PK), teacherName, password
-TEACHERSUBJECT	teacherID (FK), offeringID (FK), PK(teacherID, offeringID)
-RESULT	rollNo (FK), offeringID (FK), theoryMarks, internalMarks, totalMarks, gradePoint, status, PK(rollNo, offeringID)
-ADMIN	adminID (PK), username, password
-🏛 System Architecture
+🗃 Database Schema (Core Models)<br />
+Table	Fields<br />
+STUDENT	rollNo (PK), firstName, lastName, dateOfBirth, branchCode (FK)<br />
+BRANCH	branchCode (PK), branchName<br />
+SUBJECT	subjectCode (PK), subjectName<br />
+SUBJECTOFFERING	offeringID (PK), subjectCode (FK), branchCode (FK), semester, credits, assignedTeacherID (FK)<br />
+TEACHER	teacherID (PK), teacherName, password<br />
+TEACHERSUBJECT	teacherID (FK), offeringID (FK), PK(teacherID, offeringID)<br />
+RESULT	rollNo (FK), offeringID (FK), theoryMarks, internalMarks, totalMarks, gradePoint, status, PK(rollNo, offeringID)<br />
+ADMIN	adminID (PK), username, password<br />
+🏛 System Architecture<br />
 
-Frontend: Next.js App Router, Server Components, TailwindCSS, shadcn UI
-Backend: Next.js Route Handlers, Prisma Client, Secure Authentication
-Database: Fully normalized SQL schema with relational integrity
-Deployment: Vercel (auto-build, auto-routing, edge support)
+Frontend: Next.js App Router, Server Components, TailwindCSS, shadcn UI<br />
+Backend: Next.js Route Handlers, Prisma Client, Secure Authentication<br />
+Database: Fully normalized SQL schema with relational integrity<br />
+Deployment: Vercel (auto-build, auto-routing, edge support)<br />
 
-▶️ Running Locally
+▶️ Running Locally<br />
 
-Clone the repository
-git clone https://github.com/Masham-0/exam-result-management-project
-Install dependencies
-npm install
+Clone the repository<br />
+git clone https://github.com/Masham-0/exam-result-management-project<br />
+Install dependencies<br />
+npm install<br />
 
-Run development server
-npm run dev
-App starts at: [http://localhost:3000](https://examresult.vercel.app/)
+Run development server<br />
+npm run dev<br />
+App starts at: [http://localhost:3000](https://examresult.vercel.app/)<br />
 
-Build for production
-npm run build
-
-🌐 Deploy on Vercel (Recommended)
-
-Select "Import Git Repository" on Vercel
-Choose your project
-Vercel auto-detects Next.js and deploys automatically
-Your app becomes instantly accessible via HTTPS
+Build for production<br />
+npm run build<br />
 
 🧩 Project Structure
 project/<br />
  ├── app/<br />
  ├── components/<br />
  ├── lib/<br />
- ├── prisma/<br />
  ├── public/<br />
  ├── styles/<br />
  ├── next.config.ts<br />
@@ -104,19 +95,19 @@ project/<br />
  ├── package.json<br />
  └── README.md<br />
 
-🎯 Future Enhancements
+🎯 Future Enhancements<br />
 
-CSV bulk upload
-PDF marksheet generator
-Teacher remarks system
-Parent login portal
-Branch-wise analytics dashboard
+CSV bulk upload<br />
+PDF marksheet generator<br />
+Teacher remarks system<br />
+Parent login portal<br />
+Branch-wise analytics dashboard<br />
 
-📝 License
+📝 License<br />
 
-This project is intended for academic and educational use.
+This project is intended for academic and educational use.<br />
 
-❤️ Acknowledgments
+❤️ Acknowledgments<br />
 
 Next.js<br />
 Vercel<br />
