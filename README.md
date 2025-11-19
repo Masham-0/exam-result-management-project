@@ -13,8 +13,12 @@ As a Student :
 ID - 2024UCM2376
 Password - 20050521
 
-As a teacher - 
-ID - T
+As a teacher - T010
+ID - password123
+
+As an Admin - 
+ID - ADMIN001
+password - admin123
 
 🚀 Key Features
 🔵 Student
@@ -116,6 +120,6 @@ This project is intended for academic and educational use.
 
 Next.js
 Vercel
-Prisma
+Supabase
 TailwindCSS
 Shadcn UI
